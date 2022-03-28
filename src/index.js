@@ -38,13 +38,14 @@ function checksTodoExists(request, response, next) {
   if(!user) {
     return response.status(404).json({error:" User not found"})
   }
-  const todo = user.todos.find(todo => user.todos.id === id)
+  const todo = user.todos.find((todo) => todo.id === id)
   if(!validate(id)) {
     return response.status(400).json({ error: "Invalid Id"})
   }
   if (!todo) {
     return response.status(404).json({ error: 'Todo not found' })
   } 
+  
   request.todo = todo
   request.user = user
   return next()
@@ -145,7 +146,7 @@ app.patch('/todos/:id/done', checksTodoExists, (request, response) => {
 app.delete('/todos/:id', checksExistsUserAccount, checksTodoExists, (request, response) => {
   const { user } = request;
   const { id } = request.params
-  const todo = user.todos.find((todo)=> users.todos.id ===id);
+  const todo = user.todos.find((todo)=> todo.id ===id);
 
   if (!todo) {
     return response.status(404).json({ error: 'Todo not found' });
